@@ -18,10 +18,16 @@
     "cboden/ratchet": "^0.4.4",
     "symfony/process": "^7.2"
   },
+  "autoload": {
+    "psr-4": {
+      "PrintServer\\": "src/"
+    }
+  },
   "scripts": {
     "start": [
       "Composer\\Config::disableProcessTimeout",
       "php ./src/index.php"
-    ]
+    ],
+    "test": "node ./test/print.js"
   }
 }

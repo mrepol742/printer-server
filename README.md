@@ -19,14 +19,19 @@ This program was developed alongside a web-based POS system to enable receipt pr
 - **Configure Environment Variables**
 
   - **On Linux/macOS:**
+
     ```sh
     cp .env.example .env
     ```
+
   - **On Windows (Command Prompt):**
+
     ```cmd
     copy .env.example .env
     ```
+
   - **On Windows (PowerShell):**
+
     ```powershell
     Copy-Item .env.example .env
     ```
@@ -47,6 +52,12 @@ This program was developed alongside a web-based POS system to enable receipt pr
 
   ```sh
   composer run start
+  ```
+
+- **Test Print**  
+
+  ```sh
+  composer run test
   ```
 
 ---
