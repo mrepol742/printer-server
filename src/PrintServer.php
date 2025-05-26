@@ -116,9 +116,9 @@ class PrintServer implements MessageComponentInterface
             $printer->feed(3);
 
             $printer->setJustification(Printer::JUSTIFY_CENTER);
-            $printer->barcode("{A{$data['receipt']['transaction_number']}", Printer::BARCODE_CODE128);
+            $printer->barcode("{A{$data['receipt']['id']}", Printer::BARCODE_CODE128);
             $printer->setJustification(Printer::JUSTIFY_CENTER);
-            $printer->text("{$data['receipt']['transaction_number']}\n");
+            $printer->text("{$data['receipt']['id']}\n");
             $printer->feed();
 
             $printer->cut();
