@@ -43,14 +43,11 @@ class PrintServer implements MessageComponentInterface
 
             $printer->feed();
 
-            $lineWidth = 42;
-            $id = "POS {$data['receipt']['cashier']['id']}";
-            $name = $data['receipt']['cashier']['name'];
-            $space = $lineWidth - strlen($id) - strlen($name);
-            if ($space < 1) $space = 1;
-            $printer->text($id . str_repeat(' ', $space) . $name . "\n");
-
             $printer->setJustification(Printer::JUSTIFY_LEFT);
+            
+            $printer->text("POS {$data['receipt']['cashier']['id']}\n");
+            $printer->text("Cashier: {$data['receipt']['cashier']['name']}\n");
+            $printer->text("Date: " . date('Y-m-d H:i:s') . "\n");
 
             $qtyWidth = 5;
             $descWidth = 22;
@@ -82,6 +79,7 @@ class PrintServer implements MessageComponentInterface
             $printer->text(str_pad("Total Taxes:", $totalWidth - $amtWidth) . str_pad(number_format($data['receipt']['total_taxes'], 2), $amtWidth, ' ', STR_PAD_LEFT) . "\n");
             $printer->text(str_pad("Mode of Payment:", $totalWidth - $amtWidth) . str_pad($data['receipt']['mode_of_payment'], $amtWidth, ' ', STR_PAD_LEFT) . "\n");
             $printer->text(str_pad("Reference Number:", $totalWidth - $amtWidth) . str_pad($data['receipt']['reference_number'], $amtWidth, ' ', STR_PAD_LEFT) . "\n");
+            $printer->text(str_pad("Date of Sale:", $totalWidth - $amtWidth) . str_pad($data['receipt']['date_of_sale'], $amtWidth, ' ', STR_PAD_LEFT) . "\n");
 
             $printer->feed();
 
