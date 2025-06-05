@@ -65,18 +65,19 @@ class PrintServer implements MessageComponentInterface
                 $qty = str_pad($item['quantity'], $qtyWidth);
                 $desc = mb_substr($item['name'], 0, $descWidth);
                 $desc = str_pad($desc, $descWidth);
-                $amt = str_pad(number_format($item['cost_price'], 2), $amtWidth, ' ', STR_PAD_LEFT);
+                $amt = str_pad(number_format($item['sale_price'], 2), $amtWidth, ' ', STR_PAD_LEFT);
                 $printer->text("{$qty}{$desc}{$amt}\n");
             }
 
             $printer->text(str_repeat('-', $totalWidth) . "\n\n");
+
+            $printer->text(str_pad("Discount:", $totalWidth - $amtWidth) . str_pad(number_format($data['receipt']['discount'], 2), $amtWidth, ' ', STR_PAD_LEFT) . "\n");
+            $printer->text(str_pad("Taxes:", $totalWidth - $amtWidth) . str_pad(number_format($data['receipt']['total_taxes'], 2), $amtWidth, ' ', STR_PAD_LEFT) . "\n");
             $printer->text(str_pad("TOTAL:", $totalWidth - $amtWidth) . str_pad(number_format($data['receipt']['total'], 2), $amtWidth, ' ', STR_PAD_LEFT) . "\n");
             $printer->text(str_pad("Payment Received:", $totalWidth - $amtWidth) . str_pad(number_format($data['receipt']['total_payment'], 2), $amtWidth, ' ', STR_PAD_LEFT) . "\n");
             $printer->text(str_repeat('-', $totalWidth) . "\n");
             $printer->text(str_pad("CHANGE:", $totalWidth - $amtWidth) . str_pad(number_format($data['receipt']['total_change'], 2), $amtWidth, ' ', STR_PAD_LEFT) . "\n");
             $printer->feed();
-            $printer->text(str_pad("Total Discount:", $totalWidth - $amtWidth) . str_pad(number_format($data['receipt']['total_discount'], 2), $amtWidth, ' ', STR_PAD_LEFT) . "\n");
-            $printer->text(str_pad("Total Taxes:", $totalWidth - $amtWidth) . str_pad(number_format($data['receipt']['total_taxes'], 2), $amtWidth, ' ', STR_PAD_LEFT) . "\n");
             $printer->text(str_pad("Mode of Payment:", $totalWidth - $amtWidth) . str_pad($data['receipt']['mode_of_payment'], $amtWidth, ' ', STR_PAD_LEFT) . "\n");
             $printer->text(str_pad("Reference Number:", $totalWidth - $amtWidth) . str_pad($data['receipt']['reference_number'], $amtWidth, ' ', STR_PAD_LEFT) . "\n");
             $printer->text(str_pad("Date of Sale:", $totalWidth - $amtWidth) . str_pad($data['receipt']['date_of_sale'], $amtWidth, ' ', STR_PAD_LEFT) . "\n");
@@ -89,10 +90,17 @@ class PrintServer implements MessageComponentInterface
             $printer->feed();
 
             $printer->setJustification(Printer::JUSTIFY_LEFT);
-            $printer->text("Customer: \n");
-            $printer->text("Address: \n");
-            $printer->text("TIN: \n");
-            $printer->text("SC ID No: \n");
+            if (!empty($data['receipt']['sc'])) {
+                $printer->text(str_pad("Customer:", $totalWidth - $amtWidth) . str_pad($data['receipt']['sc']['name'], $amtWidth, ' ', STR_PAD_LEFT) . "\n");
+                $printer->text(str_pad("Address:", $totalWidth - $amtWidth) . str_pad($data['receipt']['sc']['address'], $amtWidth, ' ', STR_PAD_LEFT) . "\n");
+                $printer->text(str_pad("TIN:", $totalWidth - $amtWidth) . str_pad($data['receipt']['sc']['tin'], $amtWidth, ' ', STR_PAD_LEFT) . "\n");
+                $printer->text(str_pad("SC ID No:", $totalWidth - $amtWidth) . str_pad($data['receipt']['sc']['id'], $amtWidth, ' ', STR_PAD_LEFT) . "\n");
+            } else {
+                $printer->text("Customer: \n");
+                $printer->text("Address: \n");
+                $printer->text("TIN: \n");
+                $printer->text("SC ID No: \n");
+            }
             $printer->text("Signature: \n");
             $printer->feed();
 

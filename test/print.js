@@ -19,11 +19,18 @@ socket.onopen = () => {
             name: "Jane Doe",
           },
           products: [
-            { quantity: 2, name: "Apple", cost_price: 25.0 },
-            { quantity: 1, name: "Banana", cost_price: 15.5 },
-            { quantity: 3, name: "Orange Juice", cost_price: 45.0 },
+            { id: 3, quantity: 2, name: "Apple", sale_price: 25.0 },
+            { id: 2, quantity: 1, name: "Banana", sale_price: 15.5 },
+            { id: 1, quantity: 3, name: "Orange Juice", sale_price: 45.0 },
           ],
+          sc: {
+            id: "SC001",
+            name: "Senior Citizen",
+            address: "456 Elder St, City",
+            tin: "SC-TIN-123456",
+          },
           total: 201.5,
+          discount: 10.0,
           total_payment: 250.0,
           total_change: 48.5,
           total_discount: 10.0,
@@ -31,7 +38,7 @@ socket.onopen = () => {
           mode_of_payment: "Cash",
           reference_number: "REF123456",
           date_of_sale: "2023-10-01 12:00:00",
-          id: "000000000001"
+          id: "000000000001",
         },
       })
     );
